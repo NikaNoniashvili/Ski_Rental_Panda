@@ -1,34 +1,42 @@
-﻿// ============================================
-// გლობალური მდგომარეობა
-// ============================================
-let currentLang = localStorage.getItem('lang') || 'ka';
+﻿let currentLang = localStorage.getItem('lang') || 'ka';
 let siteTexts = {};
 
-// მოკლე დამხმარე — ტექსტის წამოსაღებად KeyName-ით
 function t(key) {
     return siteTexts[key] || key;
 }
 
-// ============================================
-// მთავარი ჩატვირთვის ფუნქცია
-// ============================================
+// "დაცვა" — თუ ეს კონტეინერი ამ გვერდზე არ არსებობს, უბრალოდ გამოტოვე
+function exists(id) {
+    return document.getElementById(id) !== null;
+}
+
 async function loadAndRenderAll() {
     siteTexts = await API.get('SiteText', currentLang) || {};
 
     renderHeader();
     renderFooter();
-    await renderHeroSection();
-    await renderGallerySection();
-    await renderRentalSection();
-    renderAboutSection();
-    await renderContactSection();
+
+    if (exists('page-hero-section')) renderPageHero();
+    if (exists('hero-section')) renderHeroSection();
+    if (exists('gallery-preview-section')) await renderGalleryPreview();
+    if (exists('gallery-section')) await renderGallerySection();
+    if (exists('rental-section')) await renderRentalSection();
+    if (exists('about-section')) renderAboutSection();
+    if (exists('location-section')) await renderLocationSection();
+    if (exists('contact-section')) await renderContactSection();
 }
 
 // ============================================
-// HEADER (ნავიგაცია + ენის გადამრთველი)
+// HEADER
 // ============================================
 function renderHeader() {
     const container = document.getElementById('site-header');
+    const path = window.location.pathname.toLowerCase();
+
+    const navLink = (href, label, matchPaths) => {
+        const isActive = matchPaths.some(p => path === p);
+        return `<a href="${href}" class="${isActive ? 'active' : ''}">${label}</a>`;
+    };
 
     container.innerHTML = `
         <header class="site-header">
@@ -37,10 +45,11 @@ function renderHeader() {
                     <span class="logo-text">GUDAURI<br><small>SKI RENTAL</small></span>
                 </a>
                 <nav class="main-nav">
-                    <a href="#hero-section">${t('NavHome')}</a>
-                    <a href="#about-section">${t('NavAbout')}</a>
-                    <a href="#gallery-section">${t('NavGallery')}</a>
-                    <a href="#contact-section">${t('NavContact')}</a>
+                    ${navLink('/', t('NavHome'), ['/', '/home', '/home/index'])}
+                    ${navLink('/Home/About', t('NavAbout'), ['/home/about'])}
+                    ${navLink('/Home/Gallery', t('NavGallery'), ['/home/gallery'])}
+                    ${navLink('/Home/Location', t('NavLocation'), ['/home/location'])}
+                    ${navLink('/Home/Contact', t('NavContact'), ['/home/contact'])}
                 </nav>
                 <div class="lang-switch">
                     <button data-lang="ka" class="${currentLang === 'ka' ? 'active' : ''}">KA</button>
@@ -50,12 +59,11 @@ function renderHeader() {
         </header>
     `;
 
-    // ენის ღილაკებზე event listener-ები
     container.querySelectorAll('.lang-switch button').forEach(btn => {
         btn.addEventListener('click', () => {
             currentLang = btn.dataset.lang;
             localStorage.setItem('lang', currentLang);
-            loadAndRenderAll(); // ყველაფერი ხელახლა იტვირთება ახალ ენაზე
+            loadAndRenderAll();
         });
     });
 }
@@ -66,7 +74,6 @@ function renderHeader() {
 async function renderFooter() {
     const container = document.getElementById('site-footer');
     const info = await API.get('ContactInfo', currentLang);
-
     if (!info) return;
 
     container.innerHTML = `
@@ -90,12 +97,24 @@ async function renderFooter() {
 }
 
 // ============================================
-// HERO სექცია (მთავარი გვერდის თავი)
+// შიდა გვერდების პატარა "hero" ზოლი (About/Gallery/Location/Contact)
 // ============================================
-async function renderHeroSection() {
-    const container = document.getElementById('hero-section');
+function renderPageHero() {
+    const container = document.getElementById('page-hero-section');
+    const titleKey = container.dataset.titleKey;
 
     container.innerHTML = `
+        <div class="page-hero">
+            <div class="container"><h1>${t(titleKey)}</h1></div>
+        </div>
+    `;
+}
+
+// ============================================
+// HERO (მთავარი გვერდი)
+// ============================================
+function renderHeroSection() {
+    document.getElementById('hero-section').innerHTML = `
         <div class="hero">
             <div class="container hero-content">
                 <h1>${t('HeroTitle')}</h1>
@@ -110,13 +129,33 @@ async function renderHeroSection() {
     `;
 }
 
+// მთავარ გვერდზე მხოლოდ პირველი 4 ფოტო (გამეორება Gallery-გვერდისგან)
+async function renderGalleryPreview() {
+    const container = document.getElementById('gallery-preview-section');
+    const photos = await API.get('GalleryPhoto', currentLang);
+    if (!photos) return;
+
+    const photosHtml = photos.slice(0, 4).map(p => `
+        <div class="photo-card">
+            <img src="${p.imageUrl}" alt="${p.title}" />
+            <span class="photo-caption">${p.title}</span>
+        </div>
+    `).join('');
+
+    container.innerHTML = `
+        <div class="container section">
+            <h2 class="section-title">${t('SectionGalleryTitle')}</h2>
+            <div class="photo-grid">${photosHtml}</div>
+        </div>
+    `;
+}
+
 // ============================================
-// გალერეის სექცია
+// GALLERY გვერდი (სრული)
 // ============================================
 async function renderGallerySection() {
     const container = document.getElementById('gallery-section');
     const photos = await API.get('GalleryPhoto', currentLang);
-
     if (!photos) return;
 
     const photosHtml = photos.map(p => `
@@ -128,21 +167,17 @@ async function renderGallerySection() {
 
     container.innerHTML = `
         <div class="container section">
-            <h2 class="section-title">${t('SectionGalleryTitle')}</h2>
-            <div class="photo-grid">
-                ${photosHtml}
-            </div>
+            <div class="photo-grid">${photosHtml}</div>
         </div>
     `;
 }
 
 // ============================================
-// გასაქირავებელი ინვენტარის სექცია
+// RENTAL სექცია
 // ============================================
 async function renderRentalSection() {
     const container = document.getElementById('rental-section');
     const items = await API.get('RentalItem', currentLang);
-
     if (!items) return;
 
     const itemsHtml = items.map(item => `
@@ -159,39 +194,48 @@ async function renderRentalSection() {
     container.innerHTML = `
         <div class="container section">
             <h2 class="section-title">${t('SectionRentalTitle')}</h2>
-            <div class="rental-grid">
-                ${itemsHtml}
-            </div>
+            <div class="rental-grid">${itemsHtml}</div>
         </div>
     `;
 }
 
 // ============================================
-// "ჩვენ შესახებ" სექცია
+// ABOUT სექცია
 // ============================================
 function renderAboutSection() {
-    const container = document.getElementById('about-section');
-
-    container.innerHTML = `
+    document.getElementById('about-section').innerHTML = `
         <div class="container section">
-            <h2 class="section-title">${t('SectionAboutTitle')}</h2>
             <p class="about-text">${t('AboutText')}</p>
         </div>
     `;
 }
 
 // ============================================
-// კონტაქტის სექცია
+// LOCATION გვერდი (რუკა)
 // ============================================
-async function renderContactSection() {
-    const container = document.getElementById('contact-section');
+async function renderLocationSection() {
+    const container = document.getElementById('location-section');
     const info = await API.get('ContactInfo', currentLang);
-
     if (!info) return;
 
     container.innerHTML = `
         <div class="container section">
-            <h2 class="section-title">${t('ContactTitle')}</h2>
+            <p><strong>${t('LabelAddress')}:</strong> ${info.address}</p>
+            <iframe src="${info.mapEmbedUrl}" width="100%" height="350" style="border:0;"></iframe>
+        </div>
+    `;
+}
+
+// ============================================
+// CONTACT გვერდი
+// ============================================
+async function renderContactSection() {
+    const container = document.getElementById('contact-section');
+    const info = await API.get('ContactInfo', currentLang);
+    if (!info) return;
+
+    container.innerHTML = `
+        <div class="container section">
             <p>${t('ContactText')}</p>
             <ul class="contact-list">
                 <li><strong>${t('LabelAddress')}:</strong> ${info.address}</li>
@@ -199,12 +243,8 @@ async function renderContactSection() {
                 <li><strong>${t('LabelHours')}:</strong> ${info.workingHours}</li>
                 <li><strong>Email:</strong> ${info.email}</li>
             </ul>
-            <iframe src="${info.mapEmbedUrl}" width="100%" height="300" style="border:0;"></iframe>
         </div>
     `;
 }
 
-// ============================================
-// გაშვება — გვერდის ჩატვირთვისთანავე
-// ============================================
 document.addEventListener('DOMContentLoaded', loadAndRenderAll);

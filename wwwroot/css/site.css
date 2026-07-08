@@ -302,3 +302,21 @@ img {
         grid-template-columns: 1fr;
     }
 }
+
+.page-hero {
+    padding: 50px 0;
+    color: #fff;
+    text-align: left;
+    background: linear-gradient(rgba(10,25,45,.6), rgba(10,25,45,.6)), url('/images/mountains.jpg') center/cover no-repeat;
+}
+
+    .page-hero h1 {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 800;
+    }
+
+.main-nav a.active {
+    color: var(--blue-accent);
+    font-weight: 700;
+}
