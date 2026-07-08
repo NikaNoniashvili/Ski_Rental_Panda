@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="DataBase/DataBase.sqlproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="WebApplication1.csproj" />
+</Solution>
