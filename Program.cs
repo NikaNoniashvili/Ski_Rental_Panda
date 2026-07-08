@@ -1,7 +1,17 @@
+using WebApplication1.Repositories;
+using WebApplication1.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<DatabaseService>();
+
+builder.Services.AddScoped<ISiteTextRepository, SiteTextRepository>();
+builder.Services.AddScoped<IGalleryPhotoRepository, GalleryPhotoRepository>();
+builder.Services.AddScoped<IRentalItemRepository, RentalItemRepository>();
+builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
 
 var app = builder.Build();
 

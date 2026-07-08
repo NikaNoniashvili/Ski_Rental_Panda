@@ -1,0 +1,54 @@
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
+using WebApplication1.Models;
+using WebApplication1.Services;
+
+namespace WebApplication1.Repositories
+{
+    public interface IGalleryPhotoRepository
+    {
+        List<GalleryPhoto> GetAll();
+    }
+
+    public class GalleryPhotoRepository : IGalleryPhotoRepository
+    {
+        private readonly DatabaseService _databaseService;
+
+        public GalleryPhotoRepository(DatabaseService databaseService)
+        {
+            _databaseService = databaseService;
+        }
+
+        public List<GalleryPhoto> GetAll()
+        {
+            var items = new List<GalleryPhoto>();
+
+            using (var connection = (SqlConnection)_databaseService.GetConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT Id, TitleKa, TitleEn, ImageUrl, SortOrder FROM GalleryPhoto ORDER BY SortOrder";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            items.Add(new GalleryPhoto
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                TitleKa = reader["TitleKa"].ToString() ?? string.Empty,
+                                TitleEn = reader["TitleEn"].ToString() ?? string.Empty,
+                                ImageUrl = reader["ImageUrl"].ToString() ?? string.Empty,
+                                SortOrder = Convert.ToInt32(reader["SortOrder"])
+                            });
+                        }
+                    }
+                }
+            }
+
+            return items;
+        }
+    }
+}
