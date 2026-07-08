@@ -42,8 +42,11 @@ function renderHeader() {
         <header class="site-header">
             <div class="container header-inner">
                 <a class="logo" href="/">
-                    <span class="logo-text">GUDAURI<br><small>SKI RENTAL</small></span>
-                </a>
+    <span class="logo-text">
+        <span class="panda">PANDA</span>
+        <span class="ski-rental">SKI RENTAL</span>
+    </span>
+</a>
                 <nav class="main-nav">
                     ${navLink('/', t('NavHome'), ['/', '/home', '/home/index'])}
                     ${navLink('/Home/About', t('NavAbout'), ['/home/about'])}
