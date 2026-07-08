@@ -1,31 +1,304 @@
-html {
-  font-size: 14px;
+:root {
+    --navy: #0e2a47;
+    --navy-dark: #0a1e35;
+    --blue-accent: #3f7fd6;
+    --text-light: #6b7686;
+    --bg-light: #f6f8fb;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+* {
+    box-sizing: border-box;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--navy);
+    background: #fff;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Header */
+.site-header {
+    border-bottom: 1px solid #e8edf3;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 24px;
+    flex-wrap: wrap;
+}
+
+.logo-text {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 1.1;
+}
+
+    .logo-text small {
+        font-weight: 600;
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: var(--text-light);
+    }
+
+    .logo-text.light {
+        color: #fff;
+    }
+
+.main-nav {
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+}
+
+    .main-nav a {
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+        .main-nav a:hover {
+            color: var(--blue-accent);
+        }
+
+.lang-switch {
+    display: flex;
+    gap: 6px;
+}
+
+    .lang-switch button {
+        border: 1px solid #d8e0ea;
+        background: #fff;
+        padding: 5px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+        .lang-switch button.active {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+        }
+
+/* Hero */
+.hero {
+    color: #fff;
+    padding: 80px 0 50px;
+    text-align: left;
+    background: linear-gradient(rgba(10,25,45,.6), rgba(10,25,45,.6)), url('/images/mountains.jpg') center/cover no-repeat;
+}
+
+    .hero h1 {
+        font-size: 38px;
+        font-weight: 800;
+        margin: 0 0 14px;
+    }
+
+.hero-sub {
+    font-size: 17px;
+    margin: 0 0 30px;
+    color: #e5edf7;
+}
+
+.hero-features {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Sections */
+.section {
+    padding: 50px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 28px;
+}
+
+/* Photo grid */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.photo-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    box-shadow: 0 4px 14px rgba(14,42,71,.08);
+}
+
+    .photo-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,.6));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 20px 10px 8px;
+}
+
+/* Rental grid */
+.rental-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.rental-card {
+    background: var(--bg-light);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .rental-card img {
+        height: 150px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+.rental-card-body {
+    padding: 16px;
+}
+
+    .rental-card-body h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+    }
+
+    .rental-card-body p {
+        font-size: 13px;
+        color: var(--text-light);
+        margin: 0 0 10px;
+        line-height: 1.5;
+    }
+
+.rental-price {
+    font-weight: 700;
+    color: var(--blue-accent);
+}
+
+/* About */
+.about-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #33455e;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Contact */
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+    .contact-list iframe {
+        border-radius: 10px;
+    }
+
+/* Footer */
+.site-footer {
+    background: var(--navy-dark);
+    color: #fff;
+    margin-top: 30px;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 24px;
+}
+
+.footer-info {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    flex-wrap: wrap;
+}
+
+.footer-social {
+    display: flex;
+    gap: 14px;
+}
+
+    .footer-social a {
+        color: #a9c1e0;
+    }
+
+.footer-bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #97a6bb;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .photo-grid, .rental-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .main-nav {
+        gap: 14px;
+    }
+}
+
+@media (max-width: 560px) {
+    .photo-grid, .rental-grid {
+        grid-template-columns: 1fr;
+    }
 }
