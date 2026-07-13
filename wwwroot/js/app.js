@@ -82,7 +82,7 @@ async function renderFooter() {
     container.innerHTML = `
         <footer class="site-footer">
             <div class="container footer-inner">
-                <span class="logo-text light">GUDAURI SKI RENTAL</span>
+                <span class="logo-text light">PANDA SKI RENTAL</span>
                 <div class="footer-info">
                     <span>📍 ${info.address}</span>
                     <span>📞 ${info.phone}</span>
@@ -93,7 +93,7 @@ async function renderFooter() {
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; ${new Date().getFullYear()} GUDAURI SKI RENTAL. ${t('FooterRights')}.
+                &copy; ${new Date().getFullYear()} PANDA SKI RENTAL. ${t('FooterRights')}.
             </div>
         </footer>
     `;
