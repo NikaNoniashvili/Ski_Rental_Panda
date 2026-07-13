@@ -139,7 +139,7 @@ async function renderGalleryPreview() {
     if (!photos) return;
 
     const photosHtml = photos.slice(0, 4).map(p => `
-        <div class="photo-card">
+        <div class="photo-card" ${p.title === 'ჩვენი ოფისი' || p.title === 'Our Office' ? 'style="cursor: pointer;" onclick="window.location.href=\'/Home/Location\'"' : ''}>
             <img src="${p.imageUrl}" alt="${p.title}" />
             <span class="photo-caption">${p.title}</span>
         </div>
