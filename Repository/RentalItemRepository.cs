@@ -1,15 +1,11 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 using WebApplication1.Models;
+using WebApplication1.Repository.Interface;
 using WebApplication1.Services;
 
 namespace WebApplication1.Repositories
 {
-    public interface IRentalItemRepository
-    {
-        List<RentalItem> GetAll();
-    }
-
     public class RentalItemRepository : IRentalItemRepository
     {
         private readonly DatabaseService _databaseService;
