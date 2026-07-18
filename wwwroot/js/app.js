@@ -41,7 +41,8 @@ function renderHeader() {
     container.innerHTML = `
         <header class="site-header">
             <div class="container header-inner">
-                <a class="logo" href="/">
+               <a class="logo" href="/">
+    <img src="/favicon.ico" alt="Logo" style="width:48px;height:48px;margin-right:10px;" />
     <span class="logo-text">
         <span class="panda">PANDA</span>
         <span class="ski-rental">SKI RENTAL</span>
