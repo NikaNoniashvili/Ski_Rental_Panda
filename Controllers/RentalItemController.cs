@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Repositories;
+using WebApplication1.Repository.Interface;
 
 namespace WebApplication1.Controllers
 {
