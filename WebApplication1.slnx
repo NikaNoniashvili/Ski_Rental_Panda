@@ -1,7 +1,3 @@
 <Solution>
-  <Project Path="DataBase/DataBase.sqlproj" Id="5e848824-29cc-44df-9a77-16cb36b697cf">
-    <Build />
-    <Deploy />
-  </Project>
   <Project Path="WebApplication1.csproj" />
 </Solution>
