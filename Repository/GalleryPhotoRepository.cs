@@ -23,7 +23,7 @@ public class GalleryPhotoRepository : IGalleryPhotoRepository
         {
             connection.Open();
 
-            string query = "SELECT Id, TitleKa, TitleEn, ImageUrl, SortOrder FROM GalleryPhoto ORDER BY SortOrder";
+            string query = "SELECT Id, TitleKa, TitleEn, TitleRu, ImageUrl, SortOrder FROM GalleryPhoto ORDER BY SortOrder";
 
             using (var command = new SqlCommand(query, connection))
             {
@@ -36,6 +36,7 @@ public class GalleryPhotoRepository : IGalleryPhotoRepository
                             Id = Convert.ToInt32(reader["Id"]),
                             TitleKa = reader["TitleKa"].ToString() ?? string.Empty,
                             TitleEn = reader["TitleEn"].ToString() ?? string.Empty,
+                            TitleRu = reader["TitleRu"].ToString() ?? string.Empty,  
                             ImageUrl = reader["ImageUrl"].ToString() ?? string.Empty,
                             SortOrder = Convert.ToInt32(reader["SortOrder"])
                         });

@@ -5,12 +5,17 @@ function t(key) {
     return siteTexts[key] || key;
 }
 
-// "დაცვა" — თუ ეს კონტეინერი ამ გვერდზე არ არსებობს, უბრალოდ გამოტოვე
 function exists(id) {
     return document.getElementById(id) !== null;
 }
 
 async function loadAndRenderAll() {
+    // ✅ დააკეტე dropdown rendering-დან წინ
+    const langMenu = document.getElementById('langMenu');
+    if (langMenu) {
+        langMenu.classList.remove('show');
+    }
+
     siteTexts = await API.get('SiteText', currentLang) || {};
 
     renderHeader();
@@ -56,19 +61,45 @@ function renderHeader() {
                     ${navLink('/Home/Contact', t('NavContact'), ['/home/contact'])}
                 </nav>
                 <div class="lang-switch">
-                    <button data-lang="ka" class="${currentLang === 'ka' ? 'active' : ''}">KA</button>
-                    <button data-lang="en" class="${currentLang === 'en' ? 'active' : ''}">EN</button>
+                    <button class="lang-btn" id="langBtn">
+                        <span>🌐</span> Ka • En • Ru
+                    </button>
+                    <div class="lang-menu" id="langMenu">
+                        <button class="lang-item" data-lang="ka">Ka - ქართული</button>
+                        <button class="lang-item" data-lang="en">En - English</button>
+                        <button class="lang-item" data-lang="ru">Ru - Русский</button>
+                    </div>
                 </div>
             </div>
         </header>
     `;
 
-    container.querySelectorAll('.lang-switch button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            currentLang = btn.dataset.lang;
+    // ✅ ზუსტი querySelector
+    const langBtn = container.querySelector('#langBtn');
+    const langMenu = container.querySelector('#langMenu');
+
+    // Language dropdown toggle
+    langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langMenu.classList.toggle('show');
+    });
+
+    // Language selection
+    container.querySelectorAll('.lang-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentLang = item.dataset.lang;
             localStorage.setItem('lang', currentLang);
+            langMenu.classList.remove('show');
             loadAndRenderAll();
         });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.lang-switch')) {
+            langMenu.classList.remove('show');
+        }
     });
 }
 
@@ -101,7 +132,7 @@ async function renderFooter() {
 }
 
 // ============================================
-// შიდა გვერდების პატარა "hero" ზოლი (About/Gallery/Location/Contact)
+// HERO გვერდი
 // ============================================
 function renderPageHero() {
     const container = document.getElementById('page-hero-section');
@@ -114,9 +145,6 @@ function renderPageHero() {
     `;
 }
 
-// ============================================
-// HERO (მთავარი გვერდი)
-// ============================================
 function renderHeroSection() {
     document.getElementById('hero-section').innerHTML = `
         <div class="hero">
@@ -133,14 +161,13 @@ function renderHeroSection() {
     `;
 }
 
-// მთავარ გვერდზე მხოლოდ პირველი 4 ფოტო (გამეორება Gallery-გვერდისგან)
 async function renderGalleryPreview() {
     const container = document.getElementById('gallery-preview-section');
     const photos = await API.get('GalleryPhoto', currentLang);
     if (!photos) return;
 
     const photosHtml = photos.slice(0, 4).map(p => `
-        <div class="photo-card" ${p.title === 'ჩვენი ოფისი' || p.title === 'Our Office' ? 'style="cursor: pointer;" onclick="window.location.href=\'/Home/Location\'"' : ''}>
+        <div class="photo-card" ${p.title === 'ჩვენი ოფისი' || p.title === 'Our Office' || p.title === 'Наш офис' ? 'style="cursor: pointer;" onclick="window.location.href=\'/Home/Location\'"' : ''}>
             <img src="${p.imageUrl}" alt="${p.title}" />
             <span class="photo-caption">${p.title}</span>
         </div>
@@ -155,7 +182,7 @@ async function renderGalleryPreview() {
 }
 
 // ============================================
-// GALLERY გვერდი (სრული)
+// GALLERY
 // ============================================
 async function renderGallerySection() {
     const container = document.getElementById('gallery-section');
@@ -177,7 +204,7 @@ async function renderGallerySection() {
 }
 
 // ============================================
-// RENTAL სექცია
+// RENTAL
 // ============================================
 async function renderRentalSection() {
     const container = document.getElementById('rental-section');
@@ -204,7 +231,7 @@ async function renderRentalSection() {
 }
 
 // ============================================
-// ABOUT სექცია
+// ABOUT
 // ============================================
 function renderAboutSection() {
     document.getElementById('about-section').innerHTML = `
@@ -215,7 +242,7 @@ function renderAboutSection() {
 }
 
 // ============================================
-// LOCATION გვერდი (რუკა)
+// LOCATION
 // ============================================
 async function renderLocationSection() {
     const container = document.getElementById('location-section');
@@ -231,7 +258,7 @@ async function renderLocationSection() {
 }
 
 // ============================================
-// CONTACT გვერდი
+// CONTACT
 // ============================================
 async function renderContactSection() {
     const container = document.getElementById('contact-section');

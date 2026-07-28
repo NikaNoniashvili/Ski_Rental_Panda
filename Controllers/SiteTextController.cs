@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
 
             var dict = all.ToDictionary(
                 t => t.KeyName,
-                t => lang == "en" ? t.ValueEn : t.ValueKa
+                t => lang == "en" ? t.ValueEn : (lang == "ru" ? t.ValueRu : t.ValueKa)
             );
 
             return Ok(dict);

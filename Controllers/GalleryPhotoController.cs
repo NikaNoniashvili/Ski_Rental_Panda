@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
             var result = all.Select(p => new
             {
                 p.Id,
-                Title = lang == "en" ? p.TitleEn : p.TitleKa,
+                Title = lang == "en" ? p.TitleEn : (lang == "ru" ? p.TitleRu : p.TitleKa),
                 p.ImageUrl,
                 p.SortOrder
             });

@@ -23,7 +23,8 @@ public class RentalItemRepository : IRentalItemRepository
         {
             connection.Open();
 
-            string query = "SELECT Id, NameKa, NameEn, DescriptionKa, DescriptionEn, PricePerDay, ImageUrl FROM RentalItem";
+            
+            string query = "SELECT Id, NameKa, NameEn, NameRu, DescriptionKa, DescriptionEn, DescriptionRu, PricePerDay, ImageUrl FROM RentalItem";
 
             using (var command = new SqlCommand(query, connection))
             {
@@ -36,8 +37,10 @@ public class RentalItemRepository : IRentalItemRepository
                             Id = Convert.ToInt32(reader["Id"]),
                             NameKa = reader["NameKa"].ToString() ?? string.Empty,
                             NameEn = reader["NameEn"].ToString() ?? string.Empty,
+                            NameRu = reader["NameRu"].ToString() ?? string.Empty,  
                             DescriptionKa = reader["DescriptionKa"].ToString() ?? string.Empty,
                             DescriptionEn = reader["DescriptionEn"].ToString() ?? string.Empty,
+                            DescriptionRu = reader["DescriptionRu"].ToString() ?? string.Empty,  
                             PricePerDay = Convert.ToDecimal(reader["PricePerDay"]),
                             ImageUrl = reader["ImageUrl"].ToString() ?? string.Empty
                         });

@@ -24,10 +24,10 @@ namespace WebApplication1.Controllers
 
             var result = new
             {
-                Address = lang == "en" ? info.AddressEn : info.AddressKa,
+                Address = lang == "en" ? info.AddressEn : (lang == "ru" ? info.AddressRu : info.AddressKa),
                 info.Phone,
                 info.Email,
-                WorkingHours = lang == "en" ? info.WorkingHoursEn : info.WorkingHoursKa,
+                WorkingHours = lang == "en" ? info.WorkingHoursEn : (lang == "ru" ? info.WorkingHoursRu : info.WorkingHoursKa),
                 info.FacebookUrl,
                 info.InstagramUrl,
                 info.MapEmbedUrl

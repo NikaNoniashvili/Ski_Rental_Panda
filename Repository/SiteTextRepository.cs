@@ -23,7 +23,7 @@ public class SiteTextRepository : ISiteTextRepository
         {
             connection.Open();
 
-            string query = "SELECT Id, KeyName, ValueKa, ValueEn FROM SiteText";
+            string query = "SELECT Id, KeyName, ValueKa, ValueEn, ValueRu FROM SiteText";
 
             using (var command = new SqlCommand(query, connection))
             {
@@ -36,13 +36,13 @@ public class SiteTextRepository : ISiteTextRepository
                             Id = Convert.ToInt32(reader["Id"]),
                             KeyName = reader["KeyName"].ToString() ?? string.Empty,
                             ValueKa = reader["ValueKa"].ToString() ?? string.Empty,
-                            ValueEn = reader["ValueEn"].ToString() ?? string.Empty
+                            ValueEn = reader["ValueEn"].ToString() ?? string.Empty,
+                            ValueRu = reader["ValueRu"].ToString() ?? string.Empty  
                         });
                     }
                 }
             }
         }
-
         return items;
     }
 }

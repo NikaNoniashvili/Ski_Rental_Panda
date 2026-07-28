@@ -21,7 +21,7 @@ public class ContactInfoRepository : IContactInfoRepository
         {
             connection.Open();
 
-            string query = "SELECT Id, AddressKa, AddressEn, Phone, Email, WorkingHoursKa, WorkingHoursEn, FacebookUrl, InstagramUrl, MapEmbedUrl FROM ContactInfo WHERE Id = 1";
+            string query = "SELECT Id, AddressKa, AddressEn, AddressRu, Phone, Email, WorkingHoursKa, WorkingHoursEn, WorkingHoursRu, FacebookUrl, InstagramUrl, MapEmbedUrl FROM ContactInfo WHERE Id = 1";
 
             using (var command = new SqlCommand(query, connection))
             {
@@ -34,10 +34,12 @@ public class ContactInfoRepository : IContactInfoRepository
                             Id = Convert.ToInt32(reader["Id"]),
                             AddressKa = reader["AddressKa"].ToString() ?? string.Empty,
                             AddressEn = reader["AddressEn"].ToString() ?? string.Empty,
+                            AddressRu = reader["AddressRu"].ToString() ?? string.Empty,  
                             Phone = reader["Phone"].ToString() ?? string.Empty,
                             Email = reader["Email"].ToString() ?? string.Empty,
                             WorkingHoursKa = reader["WorkingHoursKa"].ToString() ?? string.Empty,
                             WorkingHoursEn = reader["WorkingHoursEn"].ToString() ?? string.Empty,
+                            WorkingHoursRu = reader["WorkingHoursRu"].ToString() ?? string.Empty,  
                             FacebookUrl = reader["FacebookUrl"].ToString() ?? string.Empty,
                             InstagramUrl = reader["InstagramUrl"].ToString() ?? string.Empty,
                             MapEmbedUrl = reader["MapEmbedUrl"].ToString() ?? string.Empty

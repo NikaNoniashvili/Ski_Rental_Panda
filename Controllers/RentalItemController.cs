@@ -23,8 +23,8 @@ namespace WebApplication1.Controllers
             var result = all.Select(r => new
             {
                 r.Id,
-                Name = lang == "en" ? r.NameEn : r.NameKa,
-                Description = lang == "en" ? r.DescriptionEn : r.DescriptionKa,
+                Name = lang == "en" ? r.NameEn : (lang == "ru" ? r.NameRu : r.NameKa),
+                Description = lang == "en" ? r.DescriptionEn : (lang == "ru" ? r.DescriptionRu : r.DescriptionKa),
                 r.PricePerDay,
                 r.ImageUrl
             });
