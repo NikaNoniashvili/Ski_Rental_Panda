@@ -23,6 +23,7 @@ async function loadAndRenderAll() {
 
     if (exists('page-hero-section')) renderPageHero();
     if (exists('hero-section')) renderHeroSection();
+    if (exists('weather-section')) await renderWeatherSection(); 
     if (exists('gallery-preview-section')) await renderGalleryPreview();
     if (exists('gallery-section')) await renderGallerySection();
     if (exists('rental-section')) await renderRentalSection();
@@ -274,6 +275,36 @@ async function renderContactSection() {
                 <li><strong>${t('LabelHours')}:</strong> ${info.workingHours}</li>
                 <li><strong>Email:</strong> ${info.email}</li>
             </ul>
+        </div>
+    `;
+}
+
+// ============================================
+// WEATHER (ამინდი)
+// ============================================
+async function renderWeatherSection() {
+    const container = document.getElementById('weather-section');
+    const weather = await API.get('Weather', currentLang);
+    if (!weather || !weather.forecast) return;
+
+    const forecastHtml = weather.forecast.map(day => `
+        <div class="weather-card">
+            <div class="weather-day">${day.day}</div>
+            <div class="weather-temp">
+                <span class="temp-high">${day.tempMax}°</span>
+                <span class="temp-low">${day.tempMin}°</span>
+            </div>
+            <div class="weather-icon">${day.icon}</div>
+            <div class="weather-desc">${day.description}</div>
+        </div>
+    `).join('');
+
+    container.innerHTML = `
+        <div class="container section">
+            <h2 class="section-title">${weather.title || 'ამინდი გუდაურში'}</h2>
+            <div class="weather-grid">
+                ${forecastHtml}
+            </div>
         </div>
     `;
 }

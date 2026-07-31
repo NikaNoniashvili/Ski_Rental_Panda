@@ -449,3 +449,65 @@ img {
     .lang-item:last-child {
         border-radius: 0 0 6px 6px;
     }
+
+
+/* Weather Section */
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    max-width: 700px;
+    margin: 0 auto; /* Center the grid */
+}
+
+.weather-card {
+    background: linear-gradient(135deg, #3f7fd6, #2563eb);
+    color: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.weather-day {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.weather-temp {
+    display: flex;
+    justify-content: space-around;
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.temp-high {
+    font-weight: 700;
+}
+
+.temp-low {
+    opacity: 0.8;
+}
+
+.weather-icon {
+    font-size: 32px;
+    margin: 8px 0;
+}
+
+.weather-desc {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+    .weather-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .weather-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
