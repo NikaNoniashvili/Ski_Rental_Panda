@@ -258,7 +258,6 @@ async function renderRentalSection() {
             <div class="rental-card-body">
                 <h3>${item.name}</h3>
                 <p>${item.description}</p>
-                <div class="rental-price">${item.pricePerDay} ₾ / ${t('LabelPricePerDay')}</div>
             </div>
         </div>
     `).join('');
