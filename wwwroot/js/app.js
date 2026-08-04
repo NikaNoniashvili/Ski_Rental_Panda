@@ -270,7 +270,49 @@ async function renderRentalSection() {
 function renderAboutSection() {
     document.getElementById('about-section').innerHTML = `
         <div class="container section">
-            <p class="about-text">${t('AboutText')}</p>
+            <div class="about-intro">
+                <p class="about-text">${t('AboutText')}</p>
+            </div>
+            
+            <!-- OUR SERVICES -->
+            <div class="about-block">
+                <h3 class="about-heading">${t('ServicesTitle')}</h3>
+                <ul class="about-list">
+                    <li>${t('Service1')}</li>
+                    <li>${t('Service2')}</li>
+                    <li>${t('Service3')}</li>
+                </ul>
+            </div>
+            
+            <!-- SKI CLOTHING -->
+            <div class="about-block">
+                <h3 class="about-heading">${t('ClothingTitle')}</h3>
+                <ul class="about-list">
+                    <li>${t('Clothing1')}</li>
+                    <li>${t('Clothing2')}</li>
+                    <li>${t('Clothing3')}</li>
+                </ul>
+            </div>
+            
+            <!-- ACCESSORIES -->
+            <div class="about-block">
+                <h3 class="about-heading">${t('AccessoriesTitle')}</h3>
+                <ul class="about-list">
+                    <li>${t('Accessory1')}</li>
+                    <li>${t('Accessory2')}</li>
+                    <li>${t('Accessory3')}</li>
+                    <li>${t('Accessory4')}</li>
+                </ul>
+            </div>
+            
+            <!-- CHILDREN'S SPACE -->
+            <div class="about-block">
+                <h3 class="about-heading">${t('ChildrenTitle')}</h3>
+                <p class="about-block-text">${t('ChildrenText')}</p>
+                <ul class="about-list">
+                    <li>${t('Children1')}</li>
+                </ul>
+            </div>
         </div>
     `;
 }
