@@ -154,8 +154,12 @@ async function renderFooter() {
                     <span>📞 ${info.phone}</span>
                 </div>
                 <div class="footer-social">
-                    <a href="${info.facebookUrl}" target="_blank">Facebook</a>
-                    <a href="${info.instagramUrl}" target="_blank">Instagram</a>
+                    <a href="${info.facebookUrl}" target="_blank" class="social-link" title="Facebook">
+                        <span>f</span>
+                    </a>
+                    <a href="${info.instagramUrl}" target="_blank" class="social-link" title="Instagram">
+                        <span>📷</span>
+                    </a>
                 </div>
             </div>
             <div class="footer-bottom">
