@@ -511,3 +511,128 @@ img {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/**/
+
+/* Desktop Header */
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 24px;
+}
+
+.main-nav {
+    display: flex;
+    gap: 24px;
+}
+
+    .main-nav a {
+        font-weight: 600;
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+        .main-nav a:hover,
+        .main-nav a.active {
+            color: var(--blue-accent);
+        }
+
+/* Hamburger Button */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+}
+
+    .hamburger span {
+        width: 24px;
+        height: 3px;
+        background: var(--navy);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .hamburger.open span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .header-inner {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .main-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        gap: 0;
+        border-top: 1px solid #e8edf3;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        z-index: 999;
+    }
+
+        .main-nav.mobile-open {
+            max-height: 300px;
+            padding: 16px 24px;
+        }
+
+        .main-nav a {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+            .main-nav a:last-child {
+                border-bottom: none;
+            }
+
+    .logo {
+        order: 1;
+        flex: 1 1 100%;
+    }
+
+    .hamburger {
+        order: 2;
+    }
+
+    .lang-switch {
+        order: 3;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        width: 36px !important;
+        height: 36px !important;
+        margin-right: 8px !important;
+    }
+
+    .logo-text {
+        font-size: 14px !important;
+    }
+}

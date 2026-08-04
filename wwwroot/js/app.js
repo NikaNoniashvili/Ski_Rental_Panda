@@ -47,20 +47,28 @@ function renderHeader() {
     container.innerHTML = `
         <header class="site-header">
             <div class="container header-inner">
-               <a class="logo" href="/">
-    <img src="/favicon.ico" alt="Logo" style="width:48px;height:48px;margin-right:10px;" />
-    <span class="logo-text">
-        <span class="panda">PANDA</span>
-        <span class="ski-rental">SKI RENTAL</span>
-    </span>
-</a>
-                <nav class="main-nav">
+                <a class="logo" href="/">
+                    <img src="/favicon.ico" alt="Logo" style="width:48px;height:48px;margin-right:10px;" />
+                    <span class="logo-text">
+                        <span class="panda">PANDA</span>
+                        <span class="ski-rental">SKI RENTAL</span>
+                    </span>
+                </a>
+                
+                <nav class="main-nav" id="mainNav">
                     ${navLink('/', t('NavHome'), ['/', '/home', '/home/index'])}
                     ${navLink('/Home/About', t('NavAbout'), ['/home/about'])}
                     ${navLink('/Home/Gallery', t('NavGallery'), ['/home/gallery'])}
                     ${navLink('/Home/Location', t('NavLocation'), ['/home/location'])}
                     ${navLink('/Home/Contact', t('NavContact'), ['/home/contact'])}
                 </nav>
+                
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
                 <div class="lang-switch">
                     <button class="lang-btn" id="langBtn">
                         <span>🌐</span> Ka • En • Ru
@@ -75,17 +83,15 @@ function renderHeader() {
         </header>
     `;
 
-    // ✅ ზუსტი querySelector
+    // Language Menu
     const langBtn = container.querySelector('#langBtn');
     const langMenu = container.querySelector('#langMenu');
 
-    // Language dropdown toggle
     langBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         langMenu.classList.toggle('show');
     });
 
-    // Language selection
     container.querySelectorAll('.lang-item').forEach(item => {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -96,10 +102,37 @@ function renderHeader() {
         });
     });
 
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.lang-switch')) {
             langMenu.classList.remove('show');
+        }
+    });
+
+    // Hamburger Menu (ტელეფონზე)
+    const hamburger = document.getElementById('hamburger');
+    const mainNav = document.getElementById('mainNav');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mainNav.classList.toggle('mobile-open');
+            hamburger.classList.toggle('open');
+        });
+
+        // ბმულზე დაწკაპუნებისას დახურვა
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('mobile-open');
+                hamburger.classList.remove('open');
+            });
+        });
+    }
+
+    // გარეთ დაწკაპუნებისას დახურვა
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('header') && mainNav.classList.contains('mobile-open')) {
+            mainNav.classList.remove('mobile-open');
+            hamburger.classList.remove('open');
         }
     });
 }
