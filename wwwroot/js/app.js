@@ -148,7 +148,10 @@ async function renderFooter() {
     container.innerHTML = `
         <footer class="site-footer">
             <div class="container footer-inner">
-                <span class="logo-text light">PANDA SKI RENTAL</span>
+                <div class="footer-logo">
+                    <span class="footer-panda">PANDA</span>
+                    <span class="footer-ski">SKI RENTAL</span>
+                </div>
                 <div class="footer-info">
                     <span>📍 ${info.address}</span>
                     <span>📞 ${info.phone}</span>
@@ -315,6 +318,7 @@ function renderAboutSection() {
                 <p class="about-block-text">${t('ChildrenText')}</p>
                 <ul class="about-list">
                     <li>${t('Children1')}</li>
+                    <li>${t('Children2')}</li>
                 </ul>
             </div>
         </div>

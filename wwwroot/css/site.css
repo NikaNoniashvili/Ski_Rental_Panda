@@ -759,3 +759,22 @@ img {
     .social-link:nth-child(2) span {
         font-size: 22px;
     }
+
+/* Footer Logo */
+.footer-logo {
+    display: flex;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.footer-panda {
+    color: #FF1493; /* ვარდისფერი */
+    font-weight: 800;
+}
+
+.footer-ski {
+    color: #FFD700; /* ყვითალი */
+    font-weight: 800;
+}
